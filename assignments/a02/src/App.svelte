@@ -38,7 +38,7 @@
 
 <section>
 	<input type="password" bind:value={password}>
-	<button on:click={addPassword}>Add password</button>
+	<button on:click={addPassword} disabled={password==="" || tooShort}>Add password</button>
 	{#if tooShort}
 		<h3>Password is too short</h3>
 	{/if}
