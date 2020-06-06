@@ -1,0 +1,35 @@
+{
+  "name": "smui-demo-rollup",
+  "version": "1.0.0",
+  "description": "An example project implementing Svelte Material UI with Rollup.",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup -c rollup.config.js",
+    "serve": "sirv dist",
+    "serve:dev": "sirv dist --dev",
+    "autobuild": "rollup -c rollup.config.js --watch",
+    "dev": "run-p serve:dev autobuild",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dusan Mijatovic, Hunter Perrin <hperrin@gmail.com>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@material/typography": "^4.0.0",
+    "@rollup/plugin-commonjs": "^13.0.0",
+    "@rollup/plugin-node-resolve": "^8.0.1",
+    "npm-run-all": "^4.1.5",
+    "rollup": "^2.13.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-copy": "^3.3.0",
+    "rollup-plugin-livereload": "^1.3.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-postcss": "^3.1.2",
+    "rollup-plugin-svelte": "^5.2.2",
+    "rollup-plugin-terser": "^6.1.0",
+    "sass": "^1.26.8",
+    "sirv-cli": "^0.4.6",
+    "svelte": "^3.23.0",
+    "svelte-material-ui": "^1.0.0-beta.21"
+  },
+  "dependencies": {}
+}
