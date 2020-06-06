@@ -1,7 +1,5 @@
 import svelte from 'rollup-plugin-svelte';
-import resolveOld from 'rollup-plugin-node-resolve';
 import resolve from '@rollup/plugin-node-resolve';
-import commonjsOld from 'rollup-plugin-commonjs';
 import commonjs from '@rollup/plugin-commonjs';
 import postcss from 'rollup-plugin-postcss';
 import livereload from 'rollup-plugin-livereload';

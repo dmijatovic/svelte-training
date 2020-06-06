@@ -2,6 +2,8 @@
 
 This SMUI demo is based on the original example from [Hunter Perin](https://github.com/hperrin/svelte-material-ui).
 
+`NOTE! This repo does not work with LERNA hoisting the dependencies.`
+
 ## Changes
 
 The following changes were made during experiementation.
