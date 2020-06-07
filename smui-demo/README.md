@@ -15,6 +15,14 @@ npm i -D rollup-plugin-livereload rollup-plugin-terser sirv-cli  npm-run-all rol
 npm eslint eslint-plugin-svelte3
 ```
 
+### Router
+
+We use basic [SPA router from this repo](https://github.com/EmilTholin/svelte-routing).
+
+```bash
+npm i -s svelte-routing
+```
+
 ### Upgrade to rollup 2
 
 ```bash

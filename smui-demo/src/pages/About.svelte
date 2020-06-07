@@ -1,0 +1,1 @@
+<h1>About page of svelte app</h1>

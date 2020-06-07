@@ -1,64 +1,69 @@
 
 <script>
-  import Button, {Label, Icon} from '@smui/button';
+  import {onDestroy} from 'svelte'
+  import { Router, Route, navigate } from "svelte-routing";
+
+  // STORES
+  import headerStore from './store/header.js'
+  import routerStore from './store/routes.js'
+  // COMPONENTS
   import Header from './layout/Header.svelte'
   import Drawer from './layout/Drawer.svelte'
   import MainBody from './layout/Main.svelte'
-
-  import headerStore from './store/header.js'
-
-  let clicked = 0;
+  // VARIABLES
   let openDrawer=false
   let appTitle=""
   let appSubtitle=""
-
-  function handleDispatch(action){
-    const {type,detail} = action
-    console.log("handleDispatch...", type)
+  let appRoutes=[]
+  // FUNCTIONS
+  function onToggleMenu(action){
     // debugger
+    const {type,detail} = action
+    // console.log("handleDispatch...", type)
     openDrawer = !openDrawer
   }
-
   function navigateTo(action){
-    const {type,detail} = action
-    console.log("navigateTo...", detail)
+    const {detail} = action
+    // console.log("navigateTo...", detail.path)
+    navigate(detail.path)
     openDrawer = false
   }
-
-  headerStore.subscribe((data)=>{
+  // STORE SUBSRIPTIONS
+  const hSub = headerStore.subscribe((data)=>{
     console.log("Header data...", data)
     appTitle = data.title
     appSubtitle = data.subtitle
   })
-
+  const rSub = routerStore.subscribe((routes)=>{
+    console.log("App routes...", routes)
+    appRoutes = routes
+  })
+  onDestroy(()=>{
+    hSub.unsubscribe()
+    rSub.unsubscribe()
+  })
 </script>
 
 <Header
   {appTitle}
-  on:toggleMenu={handleDispatch}
+  on:toggleMenu={onToggleMenu}
 />
 
 <Drawer
   {appTitle}
   {appSubtitle}
+  routes={appRoutes}
   open={openDrawer}
-  on:navigateTo={navigateTo}/>
+  on:navigateTo={navigateTo}
+  />
 <MainBody>
-  <Button on:click={() => clicked++}>
-    <Icon class="material-icons">thumb_up</Icon>
-    <Label>Click Me</Label>
-  </Button>
-  <p class="mdc-typography--body1">
-    {#if clicked}
-      You've clicked the button {clicked} time{clicked === 1 ? '' : 's'}.
-    {:else}
-      <span class="grayed">You haven't clicked the button. Changes</span>
-    {/if}
-  </p>
+  <Router url="/">
+    {#each appRoutes as route}
+      <Route path={route.path} component={route.component} />
+    {/each}
+  </Router>
 </MainBody>
 
 <style>
-  .grayed {
-    opacity: .6;
-  }
+
 </style>
