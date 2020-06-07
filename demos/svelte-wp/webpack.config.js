@@ -7,11 +7,11 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 //load stats configuration
-const { stats } = require('./stats')
+const { stats } = require('./webpack/stats')
 //construct dist folder location
 //note: we go up from webpack folder into dist
-const dist = path.resolve(__dirname, '../dist')
-//console.log("dist...", dist);
+const dist = path.resolve(__dirname, 'dist')
+console.log("dist...", dist)
 
 module.exports = {
   mode: 'development',
@@ -26,9 +26,13 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
+        test: /\.(html|svelte)$/,
+        use: {
+          loader: 'svelte-loader',
+          options: {
+            emitCss: true,
+          },
+        },
       },
       {
         test: /\.(scss|css)$/,
@@ -42,16 +46,18 @@ module.exports = {
             },
           },
           {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true,
-            },
-          },
-          {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
-            },
+              webpackImporter: false,
+              implementation: require('sass'),
+              sassOptions: {
+                includePaths: [
+                  './node_modules',
+                  './theme'
+                ]
+              }
+            }
           },
         ],
       },
@@ -73,11 +79,12 @@ module.exports = {
   plugins: [
     //copy index html
     //https://webpack.js.org/plugins/html-webpack-plugin/
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: './src/index.html',
-      inject: true,
-    }),
+    new HtmlWebpackPlugin({}),
+    // template causes errors?
+    // new HtmlWebpackPlugin({
+    //   title:"Test title",
+    //   template: 'src/index.html'
+    // }),
     //old extract text plugin to extract css
     //new ExtractTextPlugin('[name].css')
     new MiniCssExtractPlugin({
@@ -88,17 +95,17 @@ module.exports = {
     }),
     //copy assets
     //https://webpack.js.org/plugins/copy-webpack-plugin/
-    new CopyWebpackPlugin([
-      //copy all files from static dir to root
-      //note: when no files folder is not copied!
-      './static/',
-    ]),
-    //define dev variables
-    new webpack.DefinePlugin({
-      CONTACT_API_URL: JSON.stringify(
-        'https://europe-west1-dv4all-site-test.cloudfunctions.net/sendEmail'
-      ),
+    new CopyWebpackPlugin({
+      patterns: [
+        {from: './static', to: './'},
+      ],
     }),
+    //define dev variables
+    // new webpack.DefinePlugin({
+    //   CONTACT_API_URL: JSON.stringify(
+    //     'https://europe-west1-dv4all-site-test.cloudfunctions.net/sendEmail'
+    //   ),
+    // }),
   ],
   /**
    * Display stats, see link below for complete list
@@ -115,5 +122,5 @@ module.exports = {
     compress: true,
     //route rewrites
     historyApiFallback: true,
-  }  
+  }
 }

@@ -1,0 +1,10 @@
+# Group 1
+# User-agent: Googlebot
+# Disallow: /data/
+
+# Group 2
+User-agent: *
+Allow: /
+Disallow: /img/
+
+# Sitemap: http://www.example.com/sitemap.xml
