@@ -6,7 +6,6 @@
   import List, {Item, Text, Graphic, Separator, Subheader} from '@smui/list';
   // import H6 from '@smui/common/H6.svelte';
   import {createEventDispatcher} from 'svelte'
-  
   // STORES
   import routesStore from '../store/routes.js'
   // PROPS
@@ -51,13 +50,15 @@
   <Content>
     <List>
       {#each routes as route (route.path)}
-        <Item
-          href="javascript:void(0)"
-          on:click={() => navigateTo(route.path)}
-          activated={pathname===route.path}
-          >
-          <Text>{route.label}</Text>
-        </Item>
+        {#if route.drawer}
+          <Item
+            href="javascript:void(0)"
+            on:click={() => navigateTo(route.path)}
+            activated={pathname===route.path}
+            >
+            <Text>{route.label}</Text>
+          </Item>
+        {/if}
       {/each}
     </List>
   </Content>

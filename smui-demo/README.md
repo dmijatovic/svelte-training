@@ -23,6 +23,9 @@ We use basic [SPA router from this repo](https://github.com/EmilTholin/svelte-ro
 npm i -s svelte-routing
 ```
 
+Passing dynamic parameters is possible.
+`BUT I was not able to get nested routes to work properly to load.`
+
 ### Upgrade to rollup 2
 
 ```bash

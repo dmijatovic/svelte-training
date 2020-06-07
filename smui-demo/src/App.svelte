@@ -1,6 +1,6 @@
 
 <script>
-  import {onDestroy} from 'svelte'
+  import {onDestroy, as} from 'svelte'
   import { Router, Route, navigate } from "svelte-routing";
 
   // STORES
@@ -57,8 +57,8 @@
   on:navigateTo={navigateTo}
   />
 <MainBody>
-  <Router url="/">
-    {#each appRoutes as route}
+  <Router url="" basepath="/">
+    {#each appRoutes as route}      
       <Route path={route.path} component={route.component} />
     {/each}
   </Router>
